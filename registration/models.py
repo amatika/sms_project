@@ -1,9 +1,14 @@
 from django.db import models
-class Student(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField()
+class Myuser(models.Model):
+    username = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
+    password = models.CharField(max_length=100)
 
+class Student(models.Model):
+    studentname = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    age = models.IntegerField(null=False,blank=False)
+
+class Course(models.Model):
+    coursename = models.CharField(max_length=100)
+    description=models.TextField()

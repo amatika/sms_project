@@ -25,7 +25,20 @@ SECRET_KEY = 'django-insecure-j(@qvr2!myc3$2wile5krus0!@syy&%saa+yhxiw8j9r@mj8=i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1',
+    ]
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    ]
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:8000',
+     'http://127.0.0.1',
+    ]
 
 
 # Application definition
@@ -78,7 +91,7 @@ WSGI_APPLICATION = 'sms_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'smsdb.sqlite3',
     }
 }
 

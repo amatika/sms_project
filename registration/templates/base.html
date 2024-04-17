@@ -18,12 +18,18 @@
               height: 200px;
               object-fit: cover;
             }
+        .carousel-content {
+          position: absolute;
+          z-index: 20;
+          color: white;
+          text-shadow: 0 1px 2px rgba(0,0,0,.6);
+        }
       </style>
 </head>
 <body>
   {% block navb %}
         <!-- Navbar -->
-        <nav class="container-fluid navbar navbar-expand-lg navbar-dark bg-dark" >
+        <nav class="container-fluid navbar  navbar-expand-lg navbar-dark bg-dark " >
           <!-- Container wrapper -->
           <div class="container-fluid">
             <!-- Toggle button -->
@@ -43,7 +49,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <!-- Navbar brand -->
               <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                  <h1 style="text-shadow: 2px 2px 2px white;text-decoration: overline;font-style: italic;color:#ED2939;">Emobilis</h1>
+                  <h1 style="text-shadow: 2px 2px 2px white;text-decoration: overline;font-style: italic;color:#ED2939;">Emobilis.com</h1>
               </a>
               <!-- Left links -->
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
