@@ -10,11 +10,13 @@ urlpatterns = [
     path('login/', views.login, name='myloginpage'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('adduser',views.adduser, name='addinguser'),
-
+    path('mytestform',views.gettestform, name='testform'),
     path('addstudent',views.addstudent, name='addingstudent'),
-
-
     path('editstudent/<id>',views.editstudent, name='editstudent'),
     path('updatestudent/<id>',views.updatestudent, name='updatestudent'),
-    path('deletestudent/<id>',views.deletestudent)
+    path('deletestudent/<id>',views.deletestudent), #the url comes with the id as a parameter
+    path('create/', views.create_course, name='create_course'),
+    path('success/', views.success, name='success'),
+    path('update/<int:pk>/', views.update_course, name='update_course'),
+    path('delete/<int:pk>/', views.delete_course, name='delete_course'),
 ]

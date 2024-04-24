@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 class Myuser(models.Model):
     username = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
@@ -10,5 +11,9 @@ class Student(models.Model):
     age = models.IntegerField(null=False,blank=False)
 
 class Course(models.Model):
-    coursename = models.CharField(max_length=100)
-    description=models.TextField()
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    instructor = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title

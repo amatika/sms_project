@@ -1,0 +1,38 @@
+{% extends 'dashbase.html' %}
+{% block title %}
+    Courses Dashboard
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+       <h4>All Courses:</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Instructor</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td>{{ course.title }}</td>
+                    <td>{{ course.description }}</td>
+                    <td>{{ course.instructor }}</td>
+                    <td>
+                        <a href="{% url 'update_course' course.id %}" class="btn btn-primary btn-sm">Update</a>
+                        <form action="{% url 'delete_course' course.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'create_course' %}" class="btn btn-primary">Create Another Course</a>
+    </div>
+{% endblock %}

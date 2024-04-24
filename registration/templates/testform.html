@@ -1,0 +1,14 @@
+{% extends 'dashbase.html' %}
+{% block title %}
+    Emobilis Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="post" action="/mytestform">
+        {% csrf_token %}
+        {{ form }}
+    <input type="submit" value="Save">
+</form>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'dashbase.html' %}
 {% block title %}
-    Emobilis Dashboard
+    Students Dashboard
 {% endblock %}
 
 {% block content %}
@@ -35,25 +35,28 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Age</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <th >Name</th>
+            <th >Email</th>
+            <th >Age</th>
+            <th >Edit</th>
+            <th >Delete</th>
           </tr>
         </thead>
         <tbody>
         {% for student in data %}
             <tr>
                 <td>{{ student.studentname }}</td>
+
                 <td>{{ student.email }}</td>
+
                 <td>{{ student.age }}</td>
-                <td>
+               <td>
                      <a href="/editstudent/{{ student.id }}" type="button" class="btn btn-outline-success">Edit</a>
                 </td>
                 <td>
                      <a href="/deletestudent/{{ student.id }}" type="button" class="btn btn-outline-danger">Delete</a>
                 </td>
+
             </tr>
         {% endfor %}
 
