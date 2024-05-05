@@ -4,8 +4,12 @@ from django.template import loader
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
 from  .models import Myuser,Student,Course
-from registration.forms import StudentForm
 from .forms import StudentForm,CourseForm
+from django.http import HttpResponse
+from django_daraja.mpesa.core import MpesaClient
+import requests
+import json
+
 def registration(request):
   template = loader.get_template('register.html')
   return HttpResponse(template.render())
@@ -23,12 +27,12 @@ def courses(request):
   return HttpResponse(template.render())
 
 def login(request):
-  #template = loader.get_template('login.html')
-  #return HttpResponse(template.render())
+  template = loader.get_template('login.html')
+  return HttpResponse(template.render())
   return render(request, 'login.html')
 
 def dashboard(request):
-  data=Student.objects.all();
+  data=Student.objects.all()
   context = {'data':data}
   return render(request, 'dashboard.html',context)
 
@@ -44,8 +48,6 @@ def adduser(request):
     name = request.POST.get('username')
     email = request.POST.get('email')
     password = request.POST.get('password')
-    mydata={'name':name,'email':email,'password':password}
-    print(mydata)
     query=Myuser(username=name,email=email,password=password)
     query.save()
   return HttpResponse(template.render())
@@ -67,7 +69,7 @@ def addstudent(request):
 
 
 def editstudent(request,id):
-  data = Student.objects.get(id=id);
+  data = Student.objects.get(id=id)
   context = {'data': data}
   return render(request, 'updatestudent.html', context)
 
@@ -113,20 +115,15 @@ def gettestform(request):
   return render(request, 'testform.html',context)
 
 def create_course(request):
-    if request.method == 'POST':
-      form = CourseForm(request.POST)
-      if form.is_valid():
-        form.save()
-        # Redirect to a success page
-        return redirect('success')
-    else:
-      form = CourseForm()
+    form = CourseForm()
     return render(request, 'create_course.html', {'form': form})
 
 
 def success(request):
   courses = Course.objects.all()
   return render(request, 'success.html', {'courses': courses})
+
+
 
 def update_course(request, pk):
     course = get_object_or_404(Course, pk=pk)
@@ -146,3 +143,78 @@ def delete_course(request, pk):
     course.delete()
     return redirect('success')
   return render(request, 'delete_course.html', {'course': course})
+
+def create_course22(request):
+    if request.method == 'POST':
+      form = CourseForm(request.POST)
+      if form.is_valid():
+        form.save()
+        # Redirect to a success page
+        return redirect('success')
+    else:
+      form = CourseForm()
+    return render(request, 'create_course.html', {'form': form})
+
+@csrf_exempt
+def authenticate_user(request):
+  if request.method=="POST":
+    usermail = request.POST.get('myemail')
+    password = request.POST.get('mypassword')
+
+  users = Myuser.objects.filter(email=usermail)
+  # Check if any user with the given email exists
+  if users.exists():
+    # Iterate over each user with the given email
+    for user in users:
+      # Check f the password matches
+      if user.password==password:
+        print("success")
+        return redirect("/dashboard")
+  # If no user with the given email or password match, return None
+  return redirect("/thelogin")
+
+
+#def mpesastkcall(request):
+"""  headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ksu1zTTHCUaHRX06HiuK7AgGIPkd'
+  }
+
+  payload = {
+    "BusinessShortCode": 174379,
+    "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNTA1MDEzOTE1",
+    "Timestamp": "20240505013915",
+    "TransactionType": "CustomerPayBillOnline",
+    "Amount": 1,
+    "PartyA": 254792774536,
+    "PartyB": 174379,
+    "PhoneNumber": 254708374149,
+    "CallBackURL": "https://mydomain.com/path",
+    "AccountReference": "CompanyXLTD",
+    "TransactionDesc": "Payment of X"
+  }
+  payload_json = json.dumps(payload)
+  response = requests.request("POST", 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',headers=headers, data=payload_json)
+  print(response.text.encode('utf8'))
+"""
+def mpesastkcall(request):
+  cl = MpesaClient()
+  phone_number = '0794512054'
+  amount = 1
+  account_reference = 'reference'
+  transaction_desc = 'Description'
+  callback_url = 'https://darajambili.herokuapp.com/express-payment';
+  response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+  return HttpResponse(response)
+  #return HttpResponse(response.text.encode('utf8'))
+
+
+
+
+
+def stk_push_callback(request):
+  data = request.body
+
+  return HttpResponse("STK Push in Django👋")
+
+

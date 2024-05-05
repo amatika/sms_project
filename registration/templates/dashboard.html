@@ -51,11 +51,14 @@
 
                 <td>{{ student.age }}</td>
                <td>
-                     <a href="/editstudent/{{ student.id }}" type="button" class="btn btn-outline-success">Edit</a>
+                     <a href="/editstudent/{{ student.id }}" type="button" class="btn btn-outline-info">Edit</a>
                 </td>
                 <td>
                      <a href="/deletestudent/{{ student.id }}" type="button" class="btn btn-outline-danger">Delete</a>
                 </td>
+               <td>
+                     <a href="{% url 'mpesa' %}" type="button" class="btn btn-outline-success">Pay Fee with MPESA</a>
+               </td>
 
             </tr>
         {% endfor %}
