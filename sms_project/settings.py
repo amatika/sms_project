@@ -12,10 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 # Import necessary modules
-import os
+#import os
 
 # Define your Daraja access token
-DARAJA_ACCESS_TOKEN = os.getenv('V2dA7E0enWGt9kCn2qwXImUpKDw2')
+#DARAJA_ACCESS_TOKEN = os.getenv('V2dA7E0enWGt9kCn2qwXImUpKDw2')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -185,9 +185,7 @@ MPESA_SHORTCODE_TYPE = 'paybill'
 MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
 
 # Username for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
-
 MPESA_INITIATOR_USERNAME = 'testapi'
 
 # Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
-
 MPESA_INITIATOR_SECURITY_CREDENTIAL = 'Safaricom999!*!'

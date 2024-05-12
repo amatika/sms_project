@@ -7,6 +7,7 @@ from  .models import Myuser,Student,Course
 from .forms import StudentForm,CourseForm
 from django.http import HttpResponse
 from django_daraja.mpesa.core import MpesaClient
+from django.core.paginator import Paginator
 import requests
 import json
 
@@ -31,9 +32,13 @@ def login(request):
   return HttpResponse(template.render())
   return render(request, 'login.html')
 
+#fetching all the student data from the database and performing paginations
 def dashboard(request):
   data=Student.objects.all()
-  context = {'data':data}
+  paginator = Paginator(data, 2)
+  page = request.GET.get('page')
+  students = paginator.get_page(page)
+  context = {'data':students}
   return render(request, 'dashboard.html',context)
 
 def coursedashboard(request):
@@ -197,6 +202,8 @@ def authenticate_user(request):
   response = requests.request("POST", 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',headers=headers, data=payload_json)
   print(response.text.encode('utf8'))
 """
+
+
 def mpesastkcall(request):
   cl = MpesaClient()
   phone_number = '0794512054'
@@ -209,12 +216,8 @@ def mpesastkcall(request):
   #return HttpResponse(response.text.encode('utf8'))
 
 
-
-
-
 def stk_push_callback(request):
   data = request.body
-
   return HttpResponse("STK Push in Django👋")
 
 
